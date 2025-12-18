@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Reel 💖</title>
+
+<style>
+/* MOBILE ONLY */
+@media (min-width: 768px){
+    body::before{
+        content:"📱 Please open this on a mobile device";
+        position:fixed;
+        inset:0;
+        background:black;
+        color:gold;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-size:22px;
+        z-index:9999;
+    }
+}
+
+body{
+    margin:0;
+    height:100vh;
+    background:linear-gradient(180deg,#000000,#2b0a1f,#b76e79);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:'Poppins',Arial,sans-serif;
+    color:#fff;
+    overflow:hidden;
+}
+
+/* 9:16 Reel Frame */
+.reel{
+    width:100vw;
+    max-width:430px;
+    aspect-ratio:9/16;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
+
+/* Sparkles */
+.sparkle{
+    position:absolute;
+    width:5px;
+    height:5px;
+    background:#ffd700;
+    border-radius:50%;
+    animation:twinkle 3s infinite;
+}
+@keyframes twinkle{
+    0%,100%{opacity:.2;}
+    50%{opacity:1;}
+}
+
+/* Floating hearts */
+.heart{
+    position:absolute;
+    bottom:-40px;
+    font-size:20px;
+    animation:floatHeart 6s linear infinite;
+}
+@keyframes floatHeart{
+    to{transform:translateY(-120vh); opacity:0;}
+}
+
+/* Container */
+.container{
+    text-align:center;
+    padding:20px;
+    animation:fade 1.2s ease;
+}
+@keyframes fade{
+    from{opacity:0; transform:scale(.9);}
+    to{opacity:1; transform:scale(1);}
+}
+
+h1{font-size:36px;}
+h2{color:#ffd700; font-size:24px;}
+
+.card{
+    background:rgba(255,215,0,0.12);
+    backdrop-filter:blur(10px);
+    padding:22px;
+    border-radius:20px;
+    margin-top:20px;
+    border:1px solid rgba(255,215,0,0.4);
+    animation:glow 2s infinite alternate;
+}
+@keyframes glow{
+    from{box-shadow:0 0 10px #ffd700;}
+    to{box-shadow:0 0 30px #ff9aa2;}
+}
+
+p{
+    font-size:20px;
+    line-height:1.6;
+}
+
+/* Balloons */
+.balloon{
+    position:absolute;
+    bottom:-100px;
+    font-size:32px;
+    animation:float 7s linear infinite;
+}
+@keyframes float{
+    to{transform:translateY(-120vh);}
+}
+
+/* Fireworks */
+.firework{
+    position:absolute;
+    font-size:22px;
+    animation:explode 1.2s ease forwards;
+}
+@keyframes explode{
+    from{transform:scale(0); opacity:1;}
+    to{transform:scale(2); opacity:0;}
+}
+
+/* Image */
+img{
+    width:180px;
+    border-radius:50%;
+    border:4px solid #ffd700;
+    box-shadow:0 0 35px rgba(255,215,0,.7);
+    margin-top:18px;
+}
+
+/* Countdown */
+#count{
+    font-size:60px;
+    color:#ffd700;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+    <source src="birthday.mp3" type="audio/mpeg">
+</audio>
+
+<div class="reel">
+    <div class="container">
+        <h1 id="title">🎁 A Special Surprise</h1>
+        <div class="card">
+            <p id="text"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+const quotes = [
+ "💖 A best friend like you makes life warmer and brighter.",
+ "✨ Thank you for always standing by my side.",
+ "🌸 Your smile makes every bad day better.",
+ "💫 Distance and time can never break our bond.",
+ "🌷 You are my safe place and my strength.",
+ "💛 Every memory with you is precious.",
+ "🌟 I’m lucky to call you my best friend.",
+ "🎂 Today is all about celebrating YOU."
+];
+
+let index = 0;
+const textEl = document.getElementById("text");
+const titleEl = document.getElementById("title");
+const music = document.getElementById("music");
+
+function typeText(text, callback){
+    let i = 0;
+    textEl.innerHTML = "";
+    let interval = setInterval(()=>{
+        textEl.innerHTML += text[i++];
+        if(i >= text.length){
+            clearInterval(interval);
+            if(callback) setTimeout(callback, 1200);
+        }
+    }, 35);
+}
+
+function playQuotes(){
+    if(index < quotes.length){
+        typeText(quotes[index], ()=>{
+            index++;
+            setTimeout(playQuotes, 1500);
+        });
+    } else {
+        countdown();
+    }
+}
+
+function countdown(){
+    titleEl.innerHTML = "Final Surprise In";
+    let c = 3;
+    textEl.innerHTML = c;
+    let t = setInterval(()=>{
+        c--;
+        textEl.innerHTML = c;
+        if(c === 0){
+            clearInterval(t);
+            finalReveal();
+        }
+    },1000);
+}
+
+function finalReveal(){
+    titleEl.innerHTML = "🎉 Happy Birthday 🎉";
+    textEl.innerHTML = `
+        <h2>My Best Friend 💖</h2>
+        <img src="friend.jpg">
+        <p>You are not just my best friend,  
+        you are my forever bond 💕</p>
+    `;
+
+    for(let i=0;i<25;i++){
+        let f=document.createElement("div");
+        f.className="firework";
+        f.innerHTML="🎆";
+        f.style.left=Math.random()*100+"vw";
+        f.style.top=Math.random()*100+"vh";
+        document.body.appendChild(f);
+    }
+}
+
+/* Effects */
+setInterval(()=>{
+    let b=document.createElement("div");
+    b.className="balloon";
+    b.innerHTML="🎈";
+    b.style.left=Math.random()*100+"vw";
+    document.body.appendChild(b);
+
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="💖";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+},900);
+
+/* Sparkles */
+for(let i=0;i<40;i++){
+ let s=document.createElement("div");
+ s.className="sparkle";
+ s.style.left=Math.random()*100+"vw";
+ s.style.top=Math.random()*100+"vh";
+ document.body.appendChild(s);
+}
+
+/* AUTO PLAY */
+music.play().catch(()=>{});
+playQuotes();
+</script>
+
+</body>
+</html>
