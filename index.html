@@ -3,29 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Reel 💖</title>
+<title>Birthday Surprise 💖</title>
 
 <style>
-/* MOBILE ONLY */
-@media (min-width: 768px){
-    body::before{
-        content:"📱 Please open this on a mobile device";
-        position:fixed;
-        inset:0;
-        background:black;
-        color:gold;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        font-size:22px;
-        z-index:9999;
-    }
-}
-
 body{
     margin:0;
-    height:100vh;
-    background:linear-gradient(180deg,#000000,#2b0a1f,#b76e79);
+    min-height:100vh;
+    background:linear-gradient(180deg,#000,#1a0512,#b76e79);
     display:flex;
     justify-content:center;
     align-items:center;
@@ -34,15 +18,33 @@ body{
     overflow:hidden;
 }
 
-/* 9:16 Reel Frame */
+/* Animated gradient waves */
+body::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(120deg,transparent,rgba(255,215,0,.08),transparent);
+    animation:wave 6s infinite linear;
+}
+@keyframes wave{
+    from{transform:translateX(-100%);}
+    to{transform:translateX(100%);}
+}
+
+/* Reel frame */
 .reel{
-    width:100vw;
-    max-width:430px;
+    width:100%;
+    max-width:460px;
     aspect-ratio:9/16;
     display:flex;
     justify-content:center;
     align-items:center;
     position:relative;
+    animation:camera 12s infinite alternate ease-in-out;
+}
+@keyframes camera{
+    from{transform:scale(1);}
+    to{transform:scale(1.05);}
 }
 
 /* Sparkles */
@@ -59,11 +61,11 @@ body{
     50%{opacity:1;}
 }
 
-/* Floating hearts */
+/* Hearts */
 .heart{
     position:absolute;
     bottom:-40px;
-    font-size:20px;
+    font-size:clamp(18px,4vw,24px);
     animation:floatHeart 6s linear infinite;
 }
 @keyframes floatHeart{
@@ -73,7 +75,7 @@ body{
 /* Container */
 .container{
     text-align:center;
-    padding:20px;
+    padding:clamp(16px,4vw,26px);
     animation:fade 1.2s ease;
 }
 @keyframes fade{
@@ -81,33 +83,46 @@ body{
     to{opacity:1; transform:scale(1);}
 }
 
-h1{font-size:36px;}
-h2{color:#ffd700; font-size:24px;}
+/* Neon heading */
+h1{
+    font-size:clamp(28px,7vw,42px);
+    text-shadow:0 0 10px #ffd700,0 0 20px #ff9aa2;
+}
 
+/* Card */
 .card{
     background:rgba(255,215,0,0.12);
-    backdrop-filter:blur(10px);
-    padding:22px;
-    border-radius:20px;
+    backdrop-filter:blur(12px);
+    padding:clamp(18px,4vw,26px);
+    border-radius:22px;
     margin-top:20px;
     border:1px solid rgba(255,215,0,0.4);
     animation:glow 2s infinite alternate;
 }
 @keyframes glow{
     from{box-shadow:0 0 10px #ffd700;}
-    to{box-shadow:0 0 30px #ff9aa2;}
+    to{box-shadow:0 0 35px #ff9aa2;}
 }
 
+/* Shimmer text */
 p{
-    font-size:20px;
-    line-height:1.6;
+    font-size:clamp(16px,4vw,21px);
+    line-height:1.7;
+    background:linear-gradient(90deg,#fff,#ffd700,#fff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:shimmer 3s infinite;
+}
+@keyframes shimmer{
+    from{background-position:0%;}
+    to{background-position:200%;}
 }
 
 /* Balloons */
 .balloon{
     position:absolute;
     bottom:-100px;
-    font-size:32px;
+    font-size:clamp(26px,5vw,36px);
     animation:float 7s linear infinite;
 }
 @keyframes float{
@@ -117,7 +132,7 @@ p{
 /* Fireworks */
 .firework{
     position:absolute;
-    font-size:22px;
+    font-size:clamp(20px,5vw,26px);
     animation:explode 1.2s ease forwards;
 }
 @keyframes explode{
@@ -125,19 +140,11 @@ p{
     to{transform:scale(2); opacity:0;}
 }
 
-/* Image */
-img{
-    width:180px;
-    border-radius:50%;
-    border:4px solid #ffd700;
-    box-shadow:0 0 35px rgba(255,215,0,.7);
-    margin-top:18px;
-}
-
 /* Countdown */
 #count{
-    font-size:60px;
+    font-size:clamp(46px,10vw,64px);
     color:#ffd700;
+    text-shadow:0 0 20px #ffd700;
 }
 </style>
 </head>
@@ -158,69 +165,61 @@ img{
 </div>
 
 <script>
-const quotes = [
+const quotes=[
  "💖 A best friend like you makes life warmer and brighter.",
  "✨ Thank you for always standing by my side.",
- "🌸 Your smile makes every bad day better.",
- "💫 Distance and time can never break our bond.",
+ "🌸 Your smile turns ordinary days into special memories.",
+ "💫 Distance and time can never weaken our bond.",
  "🌷 You are my safe place and my strength.",
- "💛 Every memory with you is precious.",
- "🌟 I’m lucky to call you my best friend.",
+ "💛 Every moment with you is a blessing.",
+ "🌟 I’m proud and lucky to call you my best friend.",
  "🎂 Today is all about celebrating YOU."
 ];
 
-let index = 0;
-const textEl = document.getElementById("text");
-const titleEl = document.getElementById("title");
-const music = document.getElementById("music");
+let i=0;
+const textEl=document.getElementById("text");
+const titleEl=document.getElementById("title");
+const music=document.getElementById("music");
 
-function typeText(text, callback){
-    let i = 0;
-    textEl.innerHTML = "";
-    let interval = setInterval(()=>{
-        textEl.innerHTML += text[i++];
-        if(i >= text.length){
-            clearInterval(interval);
-            if(callback) setTimeout(callback, 1200);
+function typeText(txt,cb){
+    let j=0;
+    textEl.innerHTML="";
+    let t=setInterval(()=>{
+        textEl.innerHTML+=txt[j++];
+        if(j>=txt.length){
+            clearInterval(t);
+            if(cb) setTimeout(cb,1300);
         }
-    }, 35);
+    },35);
 }
 
-function playQuotes(){
-    if(index < quotes.length){
-        typeText(quotes[index], ()=>{
-            index++;
-            setTimeout(playQuotes, 1500);
-        });
-    } else {
+function play(){
+    if(i<quotes.length){
+        typeText(quotes[i++],()=>setTimeout(play,1200));
+    }else{
         countdown();
     }
 }
 
 function countdown(){
-    titleEl.innerHTML = "Final Surprise In";
-    let c = 3;
-    textEl.innerHTML = c;
-    let t = setInterval(()=>{
+    titleEl.innerHTML="Final Surprise In";
+    let c=3;
+    textEl.innerHTML=c;
+    let timer=setInterval(()=>{
         c--;
-        textEl.innerHTML = c;
-        if(c === 0){
-            clearInterval(t);
-            finalReveal();
+        textEl.innerHTML=c;
+        if(c===0){
+            clearInterval(timer);
+            final();
         }
     },1000);
 }
 
-function finalReveal(){
-    titleEl.innerHTML = "🎉 Happy Birthday 🎉";
-    textEl.innerHTML = `
-        <h2>My Best Friend 💖</h2>
-        <img src="friend.jpg">
-        <p>You are not just my best friend,  
-        you are my forever bond 💕</p>
-    `;
+function final(){
+    titleEl.innerHTML="🎉 Happy Birthday 🎉";
+    textEl.innerHTML="💖 You are not just my best friend — you are my forever bond. I’m grateful for you today and always 💕";
 
-    for(let i=0;i<25;i++){
+    for(let k=0;k<30;k++){
         let f=document.createElement("div");
         f.className="firework";
         f.innerHTML="🎆";
@@ -243,20 +242,20 @@ setInterval(()=>{
     h.innerHTML="💖";
     h.style.left=Math.random()*100+"vw";
     document.body.appendChild(h);
-},900);
+},700);
 
 /* Sparkles */
-for(let i=0;i<40;i++){
- let s=document.createElement("div");
- s.className="sparkle";
- s.style.left=Math.random()*100+"vw";
- s.style.top=Math.random()*100+"vh";
- document.body.appendChild(s);
+for(let s=0;s<50;s++){
+ let sp=document.createElement("div");
+ sp.className="sparkle";
+ sp.style.left=Math.random()*100+"vw";
+ sp.style.top=Math.random()*100+"vh";
+ document.body.appendChild(sp);
 }
 
-/* AUTO PLAY */
+/* Auto start */
 music.play().catch(()=>{});
-playQuotes();
+play();
 </script>
 
 </body>
