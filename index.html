@@ -247,33 +247,38 @@
 
     .final-text{
 
-      position:absolute;
-      top:8%;
-      left:50%;
-      transform:translateX(-50%);
+  position:absolute;
 
-      z-index:2;
-      width: 100%;
+  top:8%;
 
-      color:white;
+  left:50%;
 
-      text-align:center;
+  transform:translateX(-50%);
 
-      animation:textFade 3s ease;
+  z-index:2;
 
-      padding:20px;
+  color:white;
 
-    }
+  text-align:center;
 
-    .final-text h2{
+  width:100%;
 
-      font-size:clamp(2.5rem,7vw,5rem);
+  padding:20px;
 
-      text-shadow:0 0 25px #ff4fa3;
-      line-height: 1:2;
+  animation:textFade 3s ease;
 
-    }
+}
 
+.final-text h2{
+
+  font-size:clamp(2.5rem,7vw,5rem);
+
+  text-shadow:
+  0 0 10px #ff4fa3,
+  0 0 20px #ff4fa3,
+  0 0 40px #ff4fa3;
+
+}
     @keyframes textFade{
 
       from{
