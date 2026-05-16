@@ -6,6 +6,7 @@
 
   <title>Happy Birthday Potti 💖</title>
 
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -18,22 +19,41 @@
     }
 
     body{
-      height:100vh;
+      min-height:100vh;
       overflow:hidden;
       display:flex;
       justify-content:center;
       align-items:center;
-      background:linear-gradient(135deg,#ff9ec4,#ffc3a0,#ffd6e0);
+      background:black;
       position:relative;
+    }
+
+    /* Background Image */
+
+    .bg-image{
+
+      position:absolute;
+      width:100%;
+      height:100%;
+
+      object-fit:cover;
+      object-position:center;
+
+      filter:brightness(0.5);
+
+      z-index:-2;
+
     }
 
     /* Floating Hearts */
 
     .heart{
+
       position:absolute;
       color:white;
       animation:float 8s linear infinite;
       opacity:0.7;
+
     }
 
     @keyframes float{
@@ -54,20 +74,20 @@
 
     }
 
-    /* Main Card */
+    /* Main Container */
 
     .container{
 
       width:90%;
-      max-width:700px;
-      padding:40px;
-      border-radius:30px;
-      background:rgba(255,255,255,0.15);
-      backdrop-filter:blur(15px);
+      max-width:900px;
+
       text-align:center;
       color:white;
-      box-shadow:0 10px 40px rgba(0,0,0,0.2);
+
+      padding:20px;
+
       animation:fadeIn 2s ease;
+
       z-index:2;
 
     }
@@ -87,99 +107,125 @@
     }
 
     h1{
-      font-size:3rem;
+
+      font-size:clamp(2rem,5vw,4rem);
+
       margin-bottom:20px;
-      animation:glow 2s infinite alternate;
-    }
 
-    @keyframes glow{
-
-      from{
-        text-shadow:0 0 10px #fff;
-      }
-
-      to{
-        text-shadow:0 0 25px #ff4fa3;
-      }
+      text-shadow:0 0 25px #ff4fa3;
 
     }
 
     .quote{
-      font-size:1.2rem;
+
+      font-size:clamp(1rem,2.5vw,2rem);
+
       line-height:1.8;
+
       margin-top:20px;
+
       min-height:120px;
+
       transition:0.5s;
+
+      text-shadow:0 0 10px rgba(0,0,0,0.6);
+
     }
+
+    /* Button */
 
     button{
 
-      margin-top:25px;
-      padding:14px 35px;
+      margin-top:30px;
+
+      padding:15px 40px;
+
       border:none;
-      border-radius:40px;
+
+      border-radius:50px;
+
       background:white;
+
       color:#ff4fa3;
-      font-size:1rem;
+
+      font-size:1.1rem;
+
       font-weight:600;
+
       cursor:pointer;
+
       transition:0.4s;
-      box-shadow:0 5px 20px rgba(0,0,0,0.2);
+
+      box-shadow:0 5px 20px rgba(0,0,0,0.3);
 
     }
 
     button:hover{
 
       transform:scale(1.08);
+
       background:#ff4fa3;
+
       color:white;
 
     }
 
-    /* Fullscreen Final Page */
+    /* FINAL SCREEN */
 
-    .final-page{
+    .final-screen{
 
       position:fixed;
+
       top:0;
       left:0;
+
       width:100%;
       height:100%;
+
       background:black;
+
       display:flex;
       justify-content:center;
       align-items:center;
       flex-direction:column;
+
       opacity:0;
       visibility:hidden;
+
       transition:1.5s ease;
-      z-index:999;
+
+      z-index:9999;
 
     }
 
-    .final-page.show{
+    .final-screen.show{
 
       opacity:1;
       visibility:visible;
 
     }
 
-    .final-page img{
+    .final-screen img{
 
-      width:100%;
-      height:100%;
-      object-fit:cover;
       position:absolute;
+
       top:0;
       left:0;
-      animation:zoomPhoto 6s ease forwards;
+
+      width:100vw;
+      height:100vh;
+
+      object-fit:cover;
+      object-position:center;
+
+      animation:zoomEffect 6s ease forwards;
 
     }
 
-    @keyframes zoomPhoto{
+    @keyframes zoomEffect{
 
       from{
-        transform:scale(1.3);
+        transform:scale(1.4);
       }
 
       to{
@@ -188,45 +234,46 @@
 
     }
 
-    .overlay{
+    .dark-overlay{
 
       position:absolute;
+
       width:100%;
       height:100%;
+
       background:rgba(0,0,0,0.35);
 
     }
 
-    .birthday-message{
+    .final-text{
 
       position:relative;
+
       z-index:2;
+
       color:white;
+
       text-align:center;
-      animation:messageFade 3s ease;
+
+      animation:textFade 3s ease;
+
       padding:20px;
 
     }
 
-    .birthday-message h2{
+    .final-text h2{
 
-      font-size:4rem;
-      text-shadow:0 0 20px #ff4fa3;
+      font-size:clamp(2.5rem,7vw,5rem);
 
-    }
-
-    .birthday-message p{
-
-      margin-top:15px;
-      font-size:1.5rem;
+      text-shadow:0 0 25px #ff4fa3;
 
     }
 
-    @keyframes messageFade{
+    @keyframes textFade{
 
       from{
         opacity:0;
-        transform:translateY(40px);
+        transform:translateY(50px);
       }
 
       to{
@@ -236,30 +283,16 @@
 
     }
 
-    @media(max-width:600px){
-
-      h1{
-        font-size:2.2rem;
-      }
-
-      .quote{
-        font-size:1rem;
-      }
-
-      .birthday-message h2{
-        font-size:2.5rem;
-      }
-
-      .birthday-message p{
-        font-size:1.1rem;
-      }
-
-    }
-
   </style>
 </head>
 
 <body>
+
+  <!-- Background Image -->
+
+  <!-- Replace bg.jpeg with your image -->
+
+  <img src="bg.jpeg" class="bg-image" alt="Background">
 
   <!-- Floating Hearts -->
 
@@ -285,11 +318,11 @@
 
   </script>
 
-  <!-- Main Quotes Card -->
+  <!-- MAIN QUOTES SECTION -->
 
-  <div class="container" id="mainCard">
+  <div class="container">
 
-    <h1>Happy Birthday Potti 🎂</h1>
+    
 
     <div class="quote" id="quote">
 
@@ -305,23 +338,21 @@
 
   </div>
 
-  <!-- Fullscreen Final Birthday Photo -->
+  <!-- FINAL FULLSCREEN PHOTO -->
 
-  <div class="final-page" id="finalPage">
+  <div class="final-screen" id="finalScreen">
 
-    <!-- Replace potti.jpg with your image -->
+    <!-- Replace potti.jpeg with your final image -->
 
     <img src="potti.jpeg" alt="Potti">
 
-    <div class="overlay"></div>
+    <div class="dark-overlay"></div>
 
-    <div class="birthday-message">
+    <div class="final-text">
 
-      <h2>Happy Birthday Potti 🎉💖</h2>
-
-      <p>
-        You are the most special person in my life ✨
-      </p>
+      <h2>
+        Happy Birthday Potti 🎉💖
+      </h2>
 
     </div>
 
@@ -337,7 +368,7 @@
       you are my safe place 💕"`,
 
       `"No matter where life takes us,
-      our friendship will always stay special 🌸"`,
+      our friendship will always stay special forever 🌸"`,
 
       `"Some people make life beautiful...
       and you are one of them ✨"`,
@@ -346,7 +377,8 @@
 
       `"I’m lucky to have you in my life 💖"`,
 
-      `"May your birthday be as wonderful as your heart 🎂"`,
+      `"May your birthday be as beautiful,
+      kind, and wonderful as your heart 🎂"`,
 
       `"Every memory with you becomes my favorite memory 💫"`
 
@@ -366,9 +398,9 @@
 
       else{
 
-        document.getElementById("mainCard").style.display = "none";
+        document.querySelector(".container").style.display = "none";
 
-        document.getElementById("finalPage").classList.add("show");
+        document.getElementById("finalScreen").classList.add("show");
 
       }
 
